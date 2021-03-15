@@ -19,11 +19,7 @@ export class HashCalculator extends PassThrough {
     return this._digest;
   }
 
-  _transform(
-    chunk: Buffer,
-    _encoding: string,
-    callback: TransformCallback
-  ): void {
+  _transform(chunk: Buffer, _encoding: string, callback: TransformCallback): void {
     this._hash.update(chunk);
     callback(null, chunk);
   }

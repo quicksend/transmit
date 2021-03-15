@@ -10,4 +10,4 @@ describe("Transmit", () => {
   it("should be defined", () => {
     expect(transmit).toBeDefined();
   });
-})
+});

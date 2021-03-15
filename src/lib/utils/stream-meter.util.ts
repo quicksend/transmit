@@ -15,11 +15,7 @@ export class StreamMeter extends PassThrough {
     this.on(String(size), cb);
   }
 
-  _transform(
-    chunk: Buffer,
-    _encoding: string,
-    callback: TransformCallback
-  ): void {
+  _transform(chunk: Buffer, _encoding: string, callback: TransformCallback): void {
     this._size += chunk.length;
     callback(null, chunk);
   }

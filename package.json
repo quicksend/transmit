@@ -1,6 +1,6 @@
 {
   "name": "@quicksend/transmit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An alternative to multer that handle multipart/form-data and cleans up after itself",
   "files": [
     "dist/**/*"
@@ -9,7 +9,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint . --ext .js,.ts",
     "postversion": "git push && git push --tags",
     "prepare": "npm run build",
