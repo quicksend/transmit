@@ -517,8 +517,8 @@
         "affectsGlobalScope": false
       },
       "./src/lib/transmit.ts": {
-        "version": "e83ba12b4b145d668f4f1a0e648f3e4fa669fa0605a752904f907b54cd5f9fb7",
-        "signature": "d402c9633bdfa917b97cb5009d91e9fc06e36ff2b971782c6c5fffc551d97744",
+        "version": "02ab490e32c8c62039974560f5a8df00614068e50c3a32251e948dd52bcc1ede",
+        "signature": "fe2f1fda730f86de6735e9bca339219473e10d9308147b621d3cd479f7db8c9c",
         "affectsGlobalScope": false
       },
       "./src/index.ts": {
@@ -527,7 +527,7 @@
         "affectsGlobalScope": false
       },
       "./src/lib/transmit.spec.ts": {
-        "version": "4da85e7b474abd93eb0388a61ef821900ad87a7581c8eb9792ac67ae6aae148f",
+        "version": "2fb48405fdae3d7c9e7522068bffc02671ef953017d81586e20f050a48bac328",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
