@@ -39,7 +39,7 @@ const upload = (options = {}) => (req, _res, next) => {
     .catch(error => next(error));
 }
 
-app.post("/upload", upload({ minFields: 1 }), (req, res, next) => {
+app.post("/upload", upload(), (req, res, next) => {
   const textFields = req.fields; // An array of text fields
   const files = req.files; // An array of files
 });
