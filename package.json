@@ -17,6 +17,7 @@
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
     "test": "jest",
+    "test:watch": "jest --watch",
     "version": "npm run format && git add -A src"
   },
   "engines": {
