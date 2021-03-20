@@ -2,6 +2,7 @@ import { Hash, createHash } from "crypto";
 
 import { PassThrough, TransformCallback } from "stream";
 
+/** @internal */
 export class HashCalculator extends PassThrough {
   private _digest: string | null = null;
   private _hash: Hash;

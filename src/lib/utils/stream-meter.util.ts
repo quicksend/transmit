@@ -1,5 +1,6 @@
 import { PassThrough, TransformCallback } from "stream";
 
+/** @internal */
 export class StreamMeter extends PassThrough {
   private _size = 0;
 

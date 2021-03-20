@@ -1,4 +1,5 @@
 node_modules
 dist
+docs
 coverage
 tsconfig.tsbuildinfo

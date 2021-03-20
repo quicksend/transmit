@@ -1,5 +1,6 @@
 import { EventEmitter } from "events";
 
+/** @internal */
 export class Counter extends EventEmitter {
   constructor(private _value = 0) {
     super();

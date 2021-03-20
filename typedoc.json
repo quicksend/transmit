@@ -1,0 +1,16 @@
+{
+  "entryPoints": ["./src/index.ts"],
+  "excludeExternals": true,
+  "excludeInternal": true,
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "out": "docs",
+  "plugin": "typedoc-neo-theme",
+  "source": [
+    {
+      "path": "https://github.com/quicksend/transmit/blob/master/",
+      "line": "L"
+    }
+  ],
+  "theme": "./node_modules/typedoc-neo-theme/bin/default"
+}
