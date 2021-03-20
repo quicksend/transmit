@@ -7,7 +7,7 @@ An alternative to [Multer](https://github.com/expressjs/multer) for handling mul
 [Multer](https://github.com/expressjs/multer) and many other multipart/form-data parsers don't remove uploaded files if the request is aborted (without hacky solutions). Transmit uses [Busboy](https://github.com/mscdex/busboy), which wraps its functionality into a promise, making it more straightforward to use in most scenarios.
 
 ## Prerequisites
- - [Node.js](https://nodejs.org/en/) >= v15.5 (to be changed)
+ - [Node.js](https://nodejs.org/en/) >= v12.21.0
 
 ## Installation
 

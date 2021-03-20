@@ -24,7 +24,7 @@
     "version": "npm run format && git add -A src"
   },
   "engines": {
-    "node": ">=15.5.1"
+    "node": ">=12.21.0"
   },
   "repository": {
     "type": "git",
