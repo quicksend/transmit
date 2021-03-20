@@ -55,32 +55,22 @@ describe("Transmit", () => {
   });
 
   it("should return an instance of Busboy", async (done) => {
-    const server = await createTestServer((req) => {
-      const busboy = new Transmit(TRANSMIT_OPTIONS).parse(req);
+    const server = await createTestServer((req, res) => {
+      expect(new Transmit(TRANSMIT_OPTIONS).parse(req)).toBeInstanceOf(Busboy);
 
-      try {
-        expect(busboy).toBeInstanceOf(Busboy);
-
-        done();
-      } catch (error) {
-        done(error);
-      }
+      res.end(() => server.close(done));
     });
 
     await request(server).post("/").attach("file", Buffer.from([]), "test.txt");
   });
 
   it("should throw error on unsupported content type", async (done) => {
-    const server = await createTestServer((req) => {
-      try {
-        expect(() => new Transmit(TRANSMIT_OPTIONS).parse(req)).toThrow(
-          new UnsupportedContentTypeException()
-        );
+    const server = await createTestServer((req, res) => {
+      expect(() => new Transmit(TRANSMIT_OPTIONS).parse(req)).toThrow(
+        new UnsupportedContentTypeException()
+      );
 
-        done();
-      } catch (error) {
-        done(error);
-      }
+      res.end(() => server.close(done));
     });
 
     await request(server).post("/");
@@ -90,7 +80,7 @@ describe("Transmit", () => {
     const field = "file";
     const filename = "test.txt";
 
-    const server = await createTestServer((req) => {
+    const server = await createTestServer((req, res) => {
       const transmit = new Transmit(TRANSMIT_OPTIONS);
 
       const abortCallback = jest.fn();
@@ -101,10 +91,10 @@ describe("Transmit", () => {
         try {
           expect(abortCallback).not.toBeCalled();
 
-          expect(doneCallback).toHaveBeenCalledTimes(1);
+          expect(doneCallback).toBeCalledTimes(1);
           expect(doneCallback).toBeCalledWith();
 
-          expect(finishCallback).toHaveBeenCalledTimes(1);
+          expect(finishCallback).toBeCalledTimes(1);
           expect(finishCallback).toBeCalledWith(
             [
               expect.objectContaining({
@@ -115,9 +105,9 @@ describe("Transmit", () => {
             []
           );
 
-          done();
+          res.end(() => server.close(done));
         } catch (error) {
-          done(error);
+          res.end(() => server.close(() => done(error)));
         }
       });
 
@@ -132,7 +122,7 @@ describe("Transmit", () => {
   });
 
   it("should ignore files without filename", async (done) => {
-    const server = await createTestServer((req) => {
+    const server = await createTestServer((req, res) => {
       const transmit = new Transmit(TRANSMIT_OPTIONS);
 
       const abortCallback = jest.fn();
@@ -148,9 +138,9 @@ describe("Transmit", () => {
 
           expect(finishCallback).toBeCalledWith([], []);
 
-          done();
+          res.end(() => server.close(done));
         } catch (error) {
-          done(error);
+          res.end(() => server.close(() => done(error)));
         }
       });
 
@@ -165,7 +155,7 @@ describe("Transmit", () => {
   });
 
   it("should ignore files with incorrect field", async (done) => {
-    const server = await createTestServer((req) => {
+    const server = await createTestServer((req, res) => {
       const transmit = new Transmit({
         ...TRANSMIT_OPTIONS,
         field: "file"
@@ -184,9 +174,9 @@ describe("Transmit", () => {
 
           expect(finishCallback).toBeCalledWith([], []);
 
-          done();
+          res.end(() => server.close(done));
         } catch (error) {
-          done(error);
+          res.end(() => server.close(() => done(error)));
         }
       });
 
@@ -201,7 +191,7 @@ describe("Transmit", () => {
   });
 
   it("should ignore file if filter returns false", async (done) => {
-    const server = await createTestServer((req) => {
+    const server = await createTestServer((req, res) => {
       const transmit = new Transmit({
         ...TRANSMIT_OPTIONS,
         filter: () => Promise.resolve(false)
@@ -220,9 +210,9 @@ describe("Transmit", () => {
 
           expect(finishCallback).toBeCalledWith([], []);
 
-          done();
+          res.end(() => server.close(done));
         } catch (error) {
-          done(error);
+          res.end(() => server.close(() => done(error)));
         }
       });
 
@@ -237,7 +227,7 @@ describe("Transmit", () => {
   });
 
   it("should emit 'aborted' with no error on request abort", async (done) => {
-    const server = await createTestServer((req) => {
+    const server = await createTestServer((req, res) => {
       const transmit = new Transmit(TRANSMIT_OPTIONS);
 
       const abortCallback = jest.fn();
@@ -254,9 +244,9 @@ describe("Transmit", () => {
 
           expect(finishCallback).not.toBeCalled();
 
-          done();
+          res.end(() => server.close(done));
         } catch (error) {
-          done(error);
+          res.end(() => server.close(() => done(error)));
         }
       });
 
@@ -274,7 +264,7 @@ describe("Transmit", () => {
 
   // TODO: assumes utf-8
   it("should emit 'aborted' with error when field name is too large", async (done) => {
-    const server = await createTestServer((req) => {
+    const server = await createTestServer((req, res) => {
       const transmit = new Transmit({
         ...TRANSMIT_OPTIONS,
         maxFieldNameSize: 1
@@ -296,9 +286,9 @@ describe("Transmit", () => {
 
           expect(finishCallback).not.toBeCalled();
 
-          done();
+          res.end(() => server.close(done));
         } catch (error) {
-          done(error);
+          res.end(() => server.close(() => done(error)));
         }
       });
 
@@ -313,7 +303,7 @@ describe("Transmit", () => {
   });
 
   it("should emit 'aborted' with error when field value size is too large", async (done) => {
-    const server = await createTestServer((req) => {
+    const server = await createTestServer((req, res) => {
       const transmit = new Transmit({
         ...TRANSMIT_OPTIONS,
         maxFieldValueSize: 1
@@ -335,9 +325,9 @@ describe("Transmit", () => {
 
           expect(finishCallback).not.toBeCalled();
 
-          done();
+          res.end(() => server.close(done));
         } catch (error) {
-          done(error);
+          res.end(() => server.close(() => done(error)));
         }
       });
 
@@ -352,7 +342,7 @@ describe("Transmit", () => {
   });
 
   it("should emit 'aborted' with error when there are too many fields", async (done) => {
-    const server = await createTestServer((req) => {
+    const server = await createTestServer((req, res) => {
       const transmit = new Transmit({
         ...TRANSMIT_OPTIONS,
         maxFields: 1
@@ -374,9 +364,9 @@ describe("Transmit", () => {
 
           expect(finishCallback).not.toBeCalled();
 
-          done();
+          res.end(() => server.close(done));
         } catch (error) {
-          done(error);
+          res.end(() => server.close(() => done(error)));
         }
       });
 
@@ -391,7 +381,7 @@ describe("Transmit", () => {
   });
 
   it("should emit 'aborted' with error when file is too large", async (done) => {
-    const server = await createTestServer((req) => {
+    const server = await createTestServer((req, res) => {
       const transmit = new Transmit({
         ...TRANSMIT_OPTIONS,
         maxFileSize: 1
@@ -413,9 +403,9 @@ describe("Transmit", () => {
 
           expect(finishCallback).not.toBeCalled();
 
-          done();
+          res.end(() => server.close(done));
         } catch (error) {
-          done(error);
+          res.end(() => server.close(() => done(error)));
         }
       });
 
@@ -430,7 +420,7 @@ describe("Transmit", () => {
   });
 
   it("should emit 'aborted' with error when there are too many files", async (done) => {
-    const server = await createTestServer((req) => {
+    const server = await createTestServer((req, res) => {
       const transmit = new Transmit({
         ...TRANSMIT_OPTIONS,
         maxFiles: 1
@@ -452,9 +442,9 @@ describe("Transmit", () => {
 
           expect(finishCallback).not.toBeCalled();
 
-          done();
+          res.end(() => server.close(done));
         } catch (error) {
-          done(error);
+          res.end(() => server.close(() => done(error)));
         }
       });
 
@@ -472,7 +462,7 @@ describe("Transmit", () => {
   });
 
   it("should emit 'aborted' with error when there are too many parts", async (done) => {
-    const server = await createTestServer((req) => {
+    const server = await createTestServer((req, res) => {
       const transmit = new Transmit({
         ...TRANSMIT_OPTIONS,
         maxParts: 1
@@ -494,9 +484,9 @@ describe("Transmit", () => {
 
           expect(finishCallback).not.toBeCalled();
 
-          done();
+          res.end(() => server.close(done));
         } catch (error) {
-          done(error);
+          res.end(() => server.close(() => done(error)));
         }
       });
 
@@ -514,7 +504,7 @@ describe("Transmit", () => {
   });
 
   it("should emit 'aborted' with error when there are not enough fields", async (done) => {
-    const server = await createTestServer((req) => {
+    const server = await createTestServer((req, res) => {
       const transmit = new Transmit({
         ...TRANSMIT_OPTIONS,
         minFields: 2
@@ -536,9 +526,9 @@ describe("Transmit", () => {
 
           expect(finishCallback).not.toBeCalled();
 
-          done();
+          res.end(() => server.close(done));
         } catch (error) {
-          done(error);
+          res.end(() => server.close(() => done(error)));
         }
       });
 
@@ -553,7 +543,7 @@ describe("Transmit", () => {
   });
 
   it("should emit 'aborted' with error when the file is too small", async (done) => {
-    const server = await createTestServer((req) => {
+    const server = await createTestServer((req, res) => {
       const transmit = new Transmit({
         ...TRANSMIT_OPTIONS,
         minFileSize: "hello".length
@@ -575,9 +565,9 @@ describe("Transmit", () => {
 
           expect(finishCallback).not.toBeCalled();
 
-          done();
+          res.end(() => server.close(done));
         } catch (error) {
-          done(error);
+          res.end(() => server.close(() => done(error)));
         }
       });
 
@@ -592,7 +582,7 @@ describe("Transmit", () => {
   });
 
   it("should emit 'aborted' with error when there are not enough files", async (done) => {
-    const server = await createTestServer((req) => {
+    const server = await createTestServer((req, res) => {
       const transmit = new Transmit({
         ...TRANSMIT_OPTIONS,
         minFiles: 2
@@ -614,9 +604,9 @@ describe("Transmit", () => {
 
           expect(finishCallback).not.toBeCalled();
 
-          done();
+          res.end(() => server.close(done));
         } catch (error) {
-          done(error);
+          res.end(() => server.close(() => done(error)));
         }
       });
 
@@ -635,7 +625,7 @@ describe("Transmit", () => {
       const field = "file";
       const filename = "test.txt";
 
-      const server = await createTestServer(async (req) => {
+      const server = await createTestServer(async (req, res) => {
         const results = await new Transmit(TRANSMIT_OPTIONS).parseAsync(req);
 
         try {
@@ -649,9 +639,9 @@ describe("Transmit", () => {
             ]
           });
 
-          done();
+          res.end(() => server.close(done));
         } catch (error) {
-          done(error);
+          res.end(() => server.close(() => done(error)));
         }
       });
 
@@ -659,7 +649,7 @@ describe("Transmit", () => {
     });
 
     it("should delete uploaded files when it emits 'aborted'", async (done) => {
-      const server = await createTestServer(async (req) => {
+      const server = await createTestServer(async (req, res) => {
         const transmit = new Transmit({
           ...TRANSMIT_OPTIONS,
           minFiles: 2
@@ -672,9 +662,9 @@ describe("Transmit", () => {
         try {
           expect(spyOnDeleteUploadedFile).toBeCalledTimes(1);
 
-          done();
+          res.end(() => server.close(done));
         } catch (error) {
-          done(error);
+          res.end(() => server.close(() => done(error)));
         }
       });
 
