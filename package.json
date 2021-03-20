@@ -37,7 +37,7 @@
     "form-data",
     "formdata"
   ],
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/quicksend/transmit/issues"
   },
