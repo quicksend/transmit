@@ -266,7 +266,7 @@ export class Transmit extends EventEmitter {
   private async handleIncomingFile(
     field: string,
     readable: NodeJS.ReadableStream,
-    filename: string,
+    filename: string | undefined,
     encoding: string,
     mimetype: string
   ) {
@@ -275,7 +275,7 @@ export class Transmit extends EventEmitter {
     }
 
     // Ignore files with empty filenames
-    if (filename.length <= 0) {
+    if (!filename || filename.length <= 0) {
       return readable.resume();
     }
 
