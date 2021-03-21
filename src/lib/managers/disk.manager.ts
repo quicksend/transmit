@@ -1,6 +1,6 @@
-import * as fs from "fs";
-import * as os from "os";
-import * as path from "path";
+import fs from "fs";
+import os from "os";
+import path from "path";
 
 import { IncomingFile, TransmitManager } from "../transmit.interfaces";
 
@@ -27,16 +27,16 @@ export class DiskManager implements TransmitManager {
       recursive: true
     });
 
-    const pathToFile = path.join(this.options.directory, file.discriminator);
+    const destination = path.join(this.options.directory, file.discriminator);
 
-    return fs.createWriteStream(pathToFile);
+    return fs.createWriteStream(destination);
   }
 
   async deleteFile(file: IncomingFile): Promise<void> {
-    const pathToFile = path.join(this.options.directory, file.discriminator);
+    const destination = path.join(this.options.directory, file.discriminator);
 
     try {
-      await fs.promises.unlink(pathToFile);
+      await fs.promises.unlink(destination);
     } catch (error) {
       if (error.code !== "ENOENT") {
         throw error;
