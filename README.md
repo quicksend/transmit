@@ -17,7 +17,7 @@ $ npm install @quicksend/transmit
 
 ## Usage
 
-By default, all files are saved within the `os.tmpdir()` folder. You can change this by specifying the directory in the options of `DiskManager`.
+By default, all files are saved within the [os.tmpdir()](https://nodejs.org/api/os.html#os_os_tmpdir) folder. You can change this by specifying the directory in the options of [DiskManager](https://quicksend.github.io/transmit/classes/diskmanager.html).
 
 Example with Express using a custom upload destination:
 ```js
@@ -96,11 +96,11 @@ $ npm install @quicksend/nestjs-transmit
 
 ## Transformers
 
-Files can be transformed before it is written to the storage medium. A use case would be resizing uploaded images
+Files can be transformed before it is written to the storage medium. A use case would be resizing uploaded images.
 
-Transformers will run sequentially in the order that they were placed.
+Transformers will run sequentially in the order that they were placed. It must be a function that returns a readable stream.
 
-Example with [sharp](https://github.com/lovell/sharp) as a resize transformer
+Example with [sharp](https://github.com/lovell/sharp) as a resize transformer:
 ```js
 const { DiskManager, Transmit } = require("@quicksend/transmit");
 
@@ -162,4 +162,26 @@ export class MyTransmitManager implements TransmitManager {
     // must return void
   }
 }
+```
+
+## Documentation
+
+Detailed documentation can be found [here](https://quicksend.github.io/transmit/)
+
+You can build the documentation by running:
+```bash
+$ npm run docs
+```
+
+## Tests
+
+Run tests using the following commands:
+```bash
+$ npm run test
+$ npm run test:watch # run jest in watch mode during development
+```
+
+Generate coverage reports by running:
+```bash
+$ npm run coverage
 ```
