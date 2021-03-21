@@ -98,7 +98,9 @@ $ npm install @quicksend/nestjs-transmit
 
 Files can be transformed before it is written to the storage medium. A use case would be resizing uploaded images.
 
-Transformers will run sequentially in the order that they were placed. It must be a function that returns a readable stream.
+A transformer must be a function that returns a readable stream.
+
+Transformers will run sequentially in the order that they were placed.
 
 Example with [sharp](https://github.com/lovell/sharp) as a resize transformer:
 ```js
