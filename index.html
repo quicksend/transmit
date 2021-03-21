@@ -166,7 +166,8 @@
 					<h2>Transformers</h2>
 				</a>
 				<p>Files can be transformed before it is written to the storage medium. A use case would be resizing uploaded images.</p>
-				<p>Transformers will run sequentially in the order that they were placed. It must be a function that returns a readable stream.</p>
+				<p>A transformer must be a function that returns a readable stream.</p>
+				<p>Transformers will run sequentially in the order that they were placed.</p>
 				<p>Example with <a href="https://github.com/lovell/sharp">sharp</a> as a resize transformer:</p>
 				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">DiskManager</span><span style="color: #000000">, </span><span style="color: #0070C1">Transmit</span><span style="color: #000000"> } = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;@quicksend/transmit&quot;</span><span style="color: #000000">);</span>
 
