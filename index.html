@@ -77,7 +77,7 @@
 				<a href="#why" id="why" style="color: inherit; text-decoration: none;">
 					<h2>Why?</h2>
 				</a>
-				<p><a href="https://github.com/expressjs/multer">Multer</a> and many other multipart/form-data parsers don&#39;t remove uploaded files if the request is aborted (without hacky solutions). Transmit uses <a href="https://github.com/mscdex/busboy">Busboy</a>, which wraps its functionality into a promise, making it more straightforward to use in most scenarios.</p>
+				<p><a href="https://github.com/expressjs/multer">Multer</a> and many other multipart/form-data parsers don&quot;t remove uploaded files if the request is aborted (without hacky solutions). It also offers a modern API, making use of promises.</p>
 				<a href="#prerequisites" id="prerequisites" style="color: inherit; text-decoration: none;">
 					<h2>Prerequisites</h2>
 				</a>
@@ -92,8 +92,9 @@
 				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
 					<h2>Usage</h2>
 				</a>
-				<p>Usage with express:</p>
-				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">Transmit</span><span style="color: #000000"> } = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;@quicksend/transmit&quot;</span><span style="color: #000000">);</span>
+				<p>By default, all files are saved within the <code>os.tmpdir()</code> folder. You can change this by specifying the directory in the options of <code>DiskManager</code>.</p>
+				<p>Example with Express using a custom upload destination:</p>
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">DiskManager</span><span style="color: #000000">, </span><span style="color: #0070C1">Transmit</span><span style="color: #000000"> } = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;@quicksend/transmit&quot;</span><span style="color: #000000">);</span>
 
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">express</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;express&quot;</span><span style="color: #000000">);</span>
 
@@ -109,32 +110,123 @@
 
 <span style="color: #000000">      </span><span style="color: #795E26">next</span><span style="color: #000000">();</span>
 <span style="color: #000000">    })</span>
-<span style="color: #000000">    .</span><span style="color: #795E26">catch</span><span style="color: #000000">(</span><span style="color: #001080">error</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">next</span><span style="color: #000000">(</span><span style="color: #001080">error</span><span style="color: #000000">));</span>
-<span style="color: #000000">}</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">catch</span><span style="color: #000000">((</span><span style="color: #001080">error</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">next</span><span style="color: #000000">(</span><span style="color: #001080">error</span><span style="color: #000000">));</span>
+<span style="color: #000000">};</span>
 
-<span style="color: #001080">app</span><span style="color: #000000">.</span><span style="color: #795E26">post</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;/upload&quot;</span><span style="color: #000000">, </span><span style="color: #795E26">upload</span><span style="color: #000000">(), (</span><span style="color: #001080">req</span><span style="color: #000000">, </span><span style="color: #001080">res</span><span style="color: #000000">, </span><span style="color: #001080">next</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">textFields</span><span style="color: #000000"> = </span><span style="color: #001080">req</span><span style="color: #000000">.</span><span style="color: #001080">fields</span><span style="color: #000000">; </span><span style="color: #008000">// An array of text fields</span>
-<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">files</span><span style="color: #000000"> = </span><span style="color: #001080">req</span><span style="color: #000000">.</span><span style="color: #001080">files</span><span style="color: #000000">; </span><span style="color: #008000">// An array of files</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">manager</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">DiskManager</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">directory:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;./uploads&quot;</span>
+<span style="color: #000000">});</span>
+
+<span style="color: #001080">app</span><span style="color: #000000">.</span><span style="color: #795E26">post</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;/upload&quot;</span><span style="color: #000000">, </span><span style="color: #795E26">upload</span><span style="color: #000000">({ </span><span style="color: #001080">manager</span><span style="color: #000000"> }), (</span><span style="color: #001080">req</span><span style="color: #000000">, </span><span style="color: #001080">res</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">res</span><span style="color: #000000">.</span><span style="color: #795E26">send</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">fields:</span><span style="color: #000000"> </span><span style="color: #001080">req</span><span style="color: #000000">.</span><span style="color: #001080">fields</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">files:</span><span style="color: #000000"> </span><span style="color: #001080">req</span><span style="color: #000000">.</span><span style="color: #001080">files</span>
+<span style="color: #000000">  });</span>
+<span style="color: #000000">});</span>
+
+<span style="color: #001080">app</span><span style="color: #000000">.</span><span style="color: #795E26">listen</span><span style="color: #000000">(</span><span style="color: #098658">3000</span><span style="color: #000000">, () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;Listening on port 3000&quot;</span><span style="color: #000000">);</span>
 <span style="color: #000000">});</span>
 </code></pre>
-				<p>Usage with NestJS:</p>
-				<p>Use <a href="https://github.com/quicksend/nestjs-transmit">nestjs-transmit</a></p>
+				<p>Example with Node.js http module:</p>
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">Transmit</span><span style="color: #000000"> } = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;@quicksend/transmit&quot;</span><span style="color: #000000">);</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">http</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;http&quot;</span><span style="color: #000000">);</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">server</span><span style="color: #000000"> = </span><span style="color: #001080">http</span><span style="color: #000000">.</span><span style="color: #795E26">createServer</span><span style="color: #000000">(</span><span style="color: #0000FF">async</span><span style="color: #000000"> (</span><span style="color: #001080">req</span><span style="color: #000000">, </span><span style="color: #001080">res</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">req</span><span style="color: #000000">.</span><span style="color: #001080">url</span><span style="color: #000000"> !== </span><span style="color: #A31515">&quot;/upload&quot;</span><span style="color: #000000"> || </span><span style="color: #001080">req</span><span style="color: #000000">.</span><span style="color: #001080">method</span><span style="color: #000000">.</span><span style="color: #795E26">toLowerCase</span><span style="color: #000000">() !== </span><span style="color: #A31515">&quot;post&quot;</span><span style="color: #000000">) {</span>
+<span style="color: #000000">    </span><span style="color: #001080">res</span><span style="color: #000000">.</span><span style="color: #795E26">writeHead</span><span style="color: #000000">(</span><span style="color: #098658">200</span><span style="color: #000000">, { </span><span style="color: #A31515">&quot;Content-Type&quot;</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;application/json&quot;</span><span style="color: #000000"> });</span>
+<span style="color: #000000">    </span><span style="color: #001080">res</span><span style="color: #000000">.</span><span style="color: #795E26">end</span><span style="color: #000000">(</span><span style="color: #267F99">JSON</span><span style="color: #000000">.</span><span style="color: #795E26">stringify</span><span style="color: #000000">({ </span><span style="color: #001080">error:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;Not Found.&quot;</span><span style="color: #000000"> }));</span>
+
+<span style="color: #000000">    </span><span style="color: #AF00DB">return</span><span style="color: #000000">;</span>
+<span style="color: #000000">  }</span>
+
+<span style="color: #000000">  </span><span style="color: #AF00DB">try</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">results</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Transmit</span><span style="color: #000000">().</span><span style="color: #795E26">parseAsync</span><span style="color: #000000">(</span><span style="color: #001080">req</span><span style="color: #000000">);</span>
+
+<span style="color: #000000">    </span><span style="color: #001080">res</span><span style="color: #000000">.</span><span style="color: #795E26">writeHead</span><span style="color: #000000">(</span><span style="color: #098658">200</span><span style="color: #000000">, { </span><span style="color: #A31515">&quot;Content-Type&quot;</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;application/json&quot;</span><span style="color: #000000"> });</span>
+<span style="color: #000000">    </span><span style="color: #001080">res</span><span style="color: #000000">.</span><span style="color: #795E26">end</span><span style="color: #000000">(</span><span style="color: #267F99">JSON</span><span style="color: #000000">.</span><span style="color: #795E26">stringify</span><span style="color: #000000">(</span><span style="color: #001080">results</span><span style="color: #000000">, </span><span style="color: #0000FF">null</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">));</span>
+<span style="color: #000000">  } </span><span style="color: #AF00DB">catch</span><span style="color: #000000"> (</span><span style="color: #001080">error</span><span style="color: #000000">) {</span>
+<span style="color: #000000">    </span><span style="color: #001080">res</span><span style="color: #000000">.</span><span style="color: #795E26">writeHead</span><span style="color: #000000">(</span><span style="color: #098658">200</span><span style="color: #000000">, { </span><span style="color: #A31515">&quot;Content-Type&quot;</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;application/json&quot;</span><span style="color: #000000"> });</span>
+<span style="color: #000000">    </span><span style="color: #001080">res</span><span style="color: #000000">.</span><span style="color: #795E26">end</span><span style="color: #000000">(</span><span style="color: #267F99">JSON</span><span style="color: #000000">.</span><span style="color: #795E26">stringify</span><span style="color: #000000">(</span><span style="color: #001080">error</span><span style="color: #000000">));</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">});</span>
+
+<span style="color: #001080">server</span><span style="color: #000000">.</span><span style="color: #795E26">listen</span><span style="color: #000000">(</span><span style="color: #098658">3000</span><span style="color: #000000">, () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;Listening on port 3000&quot;</span><span style="color: #000000">);</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<a href="#nestjs" id="nestjs" style="color: inherit; text-decoration: none;">
+					<h2>NestJS</h2>
+				</a>
+				<p>Transmit can be used with NestJS. Install <a href="https://github.com/quicksend/nestjs-transmit">nestjs-transmit</a> and follow the instructions on the README.</p>
 				<pre><code class="language-bash"><span style="color: #000000">$ npm install @quicksend/nestjs-transmit</span>
 </code></pre>
-				<a href="#api" id="api" style="color: inherit; text-decoration: none;">
-					<h2>API</h2>
+				<a href="#transformers" id="transformers" style="color: inherit; text-decoration: none;">
+					<h2>Transformers</h2>
 				</a>
-				<pre><code class="language-js"><span style="color: #008000">// TODO: Add documentation</span>
+				<p>Files can be transformed before it is written to the storage medium. A use case would be resizing uploaded images</p>
+				<p>Transformers will run sequentially in the order that they were placed.</p>
+				<p>Example with <a href="https://github.com/lovell/sharp">sharp</a> as a resize transformer</p>
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">DiskManager</span><span style="color: #000000">, </span><span style="color: #0070C1">Transmit</span><span style="color: #000000"> } = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;@quicksend/transmit&quot;</span><span style="color: #000000">);</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">express</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;express&quot;</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">sharp</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;sharp&quot;</span><span style="color: #000000">);</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">app</span><span style="color: #000000"> = </span><span style="color: #795E26">express</span><span style="color: #000000">();</span>
+
+<span style="color: #008000">// Implement transmit as an express middleware</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #795E26">upload</span><span style="color: #000000"> = (</span><span style="color: #001080">options</span><span style="color: #000000"> = {}) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> (</span><span style="color: #001080">req</span><span style="color: #000000">, </span><span style="color: #001080">_res</span><span style="color: #000000">, </span><span style="color: #001080">next</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Transmit</span><span style="color: #000000">(</span><span style="color: #001080">options</span><span style="color: #000000">)</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">parseAsync</span><span style="color: #000000">(</span><span style="color: #001080">req</span><span style="color: #000000">)</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">then</span><span style="color: #000000">((</span><span style="color: #001080">results</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #001080">req</span><span style="color: #000000">.</span><span style="color: #001080">fields</span><span style="color: #000000"> = </span><span style="color: #001080">results</span><span style="color: #000000">.</span><span style="color: #001080">fields</span><span style="color: #000000">;</span>
+<span style="color: #000000">      </span><span style="color: #001080">req</span><span style="color: #000000">.</span><span style="color: #001080">files</span><span style="color: #000000"> = </span><span style="color: #001080">results</span><span style="color: #000000">.</span><span style="color: #001080">files</span><span style="color: #000000">;</span>
+
+<span style="color: #000000">      </span><span style="color: #795E26">next</span><span style="color: #000000">();</span>
+<span style="color: #000000">    })</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">catch</span><span style="color: #000000">((</span><span style="color: #001080">error</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">next</span><span style="color: #000000">(</span><span style="color: #001080">error</span><span style="color: #000000">));</span>
+<span style="color: #000000">};</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">manager</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">DiskManager</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">directory:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;./uploads&quot;</span>
+<span style="color: #000000">});</span>
+
+<span style="color: #001080">app</span><span style="color: #000000">.</span><span style="color: #795E26">post</span><span style="color: #000000">(</span>
+<span style="color: #000000">  </span><span style="color: #A31515">&quot;/upload&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #795E26">upload</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #795E26">filter</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">file</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #811F3F"> /</span><span style="color: #EE0000">^</span><span style="color: #811F3F">image/</span><span style="color: #000000">.</span><span style="color: #795E26">test</span><span style="color: #000000">(</span><span style="color: #001080">file</span><span style="color: #000000">.</span><span style="color: #001080">mimetype</span><span style="color: #000000">), </span><span style="color: #008000">// ignore any files that are not images</span>
+<span style="color: #000000">    </span><span style="color: #001080">manager</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">transformers:</span><span style="color: #000000"> [() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">sharp</span><span style="color: #000000">().</span><span style="color: #795E26">resize</span><span style="color: #000000">(</span><span style="color: #098658">128</span><span style="color: #000000">, </span><span style="color: #098658">128</span><span style="color: #000000">).</span><span style="color: #795E26">png</span><span style="color: #000000">()], </span><span style="color: #008000">// resize any incoming image to 128x128 and save it as a png</span>
+<span style="color: #000000">  }),</span>
+<span style="color: #000000">  (</span><span style="color: #001080">req</span><span style="color: #000000">, </span><span style="color: #001080">res</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">res</span><span style="color: #000000">.</span><span style="color: #795E26">send</span><span style="color: #000000">({</span>
+<span style="color: #000000">      </span><span style="color: #001080">fields:</span><span style="color: #000000"> </span><span style="color: #001080">req</span><span style="color: #000000">.</span><span style="color: #001080">fields</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">files:</span><span style="color: #000000"> </span><span style="color: #001080">req</span><span style="color: #000000">.</span><span style="color: #001080">files</span>
+<span style="color: #000000">    });</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">);</span>
+
+<span style="color: #001080">app</span><span style="color: #000000">.</span><span style="color: #795E26">listen</span><span style="color: #000000">(</span><span style="color: #098658">3000</span><span style="color: #000000">, () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;Listening on port 3000&quot;</span><span style="color: #000000">);</span>
+<span style="color: #000000">});</span>
 </code></pre>
 				<a href="#custom-transmit-managers" id="custom-transmit-managers" style="color: inherit; text-decoration: none;">
 					<h2>Custom transmit managers</h2>
 				</a>
-				<pre><code class="language-js"><span style="color: #008000">// TODO: Add documentation</span>
+				<p>You can create your own transmit managers. All managers must implement the <a href="https://quicksend.github.io/transmit/interfaces/transmitmanager.html">TransmitManager</a> interface.</p>
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">IncomingFile</span><span style="color: #000000">, </span><span style="color: #001080">TransmitManager</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@quicksend/transmit&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">MyTransmitManager</span><span style="color: #000000"> </span><span style="color: #0000FF">implements</span><span style="color: #000000"> </span><span style="color: #267F99">TransmitManager</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #795E26">createWritableStream</span><span style="color: #000000">(</span><span style="color: #001080">file</span><span style="color: #000000">: </span><span style="color: #267F99">IncomingFile</span><span style="color: #000000">) {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// must return a writable stream</span>
+<span style="color: #000000">  }</span>
+
+<span style="color: #000000">  </span><span style="color: #795E26">deleteFile</span><span style="color: #000000">(</span><span style="color: #001080">file</span><span style="color: #000000">: </span><span style="color: #267F99">IncomingFile</span><span style="color: #000000">) {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// must return void</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">}</span>
 </code></pre>
-				<a href="#todo" id="todo" style="color: inherit; text-decoration: none;">
-					<h2>Todo</h2>
-				</a>
-				<p>[ ] Add unit tests<br>[ ] Add integration tests<br>[ ] Documentation</p>
 			</div>
 			<!--{&quot;options&quot;:&quot;/home/runner/work/transmit/transmit&quot;,&quot;tsconfig&quot;:&quot;/home/runner/work/transmit/transmit&quot;,&quot;entryPoints&quot;:[&quot;./src/index.ts&quot;],&quot;exclude&quot;:[],&quot;externalPattern&quot;:[&quot;**/node_modules/**&quot;],&quot;excludeExternals&quot;:true,&quot;excludeNotDocumented&quot;:false,&quot;excludeInternal&quot;:true,&quot;excludePrivate&quot;:true,&quot;excludeProtected&quot;:true,&quot;disableSources&quot;:false,&quot;includes&quot;:&quot;&quot;,&quot;media&quot;:&quot;&quot;,&quot;watch&quot;:false,&quot;preserveWatchOutput&quot;:false,&quot;emit&quot;:false,&quot;out&quot;:&quot;docs&quot;,&quot;json&quot;:&quot;&quot;,&quot;theme&quot;:&quot;./node_modules/typedoc-neo-theme/bin/default&quot;,&quot;highlightTheme&quot;:&quot;light-plus&quot;,&quot;name&quot;:&quot;&quot;,&quot;includeVersion&quot;:false,&quot;excludeTags&quot;:[],&quot;readme&quot;:&quot;&quot;,&quot;defaultCategory&quot;:&quot;Other&quot;,&quot;categoryOrder&quot;:[],&quot;categorizeByGroup&quot;:true,&quot;gitRevision&quot;:&quot;&quot;,&quot;gitRemote&quot;:&quot;origin&quot;,&quot;gaID&quot;:&quot;&quot;,&quot;gaSite&quot;:&quot;auto&quot;,&quot;hideGenerator&quot;:false,&quot;toc&quot;:[],&quot;disableOutputCheck&quot;:false,&quot;help&quot;:false,&quot;version&quot;:false,&quot;showConfig&quot;:false,&quot;plugin&quot;:[&quot;typedoc-neo-theme&quot;],&quot;logger&quot;:&quot;console&quot;,&quot;logLevel&quot;:1,&quot;listInvalidSymbolLinks&quot;:false,&quot;source&quot;:[{&quot;path&quot;:&quot;https://github.com/quicksend/transmit/blob/master/&quot;,&quot;line&quot;:&quot;L&quot;}]}-->
 		</div>
