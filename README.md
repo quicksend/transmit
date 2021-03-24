@@ -4,7 +4,9 @@ An alternative to [Multer](https://github.com/expressjs/multer) for handling mul
 
 ## Why?
 
-[Multer](https://github.com/expressjs/multer) and many other multipart/form-data parsers don"t remove uploaded files if the request is aborted (without hacky solutions). It also offers a modern API, making use of promises.
+[Multer](https://github.com/expressjs/multer) and many other multipart/form-data parsers don't remove uploaded files if the request is aborted. This can be a problem if a user uploads large files and abruptly aborts the request, leaving the partially uploaded (and potentially large) file on your system. Transmit automatically deletes uploaded files if it detects that the request has been aborted.
+
+In addition, Transmit offers a modern API, making use of promises. It also allows you to process and transform incoming files with the use of transformer functions.
 
 ## Prerequisites
  - [Node.js](https://nodejs.org/en/) >= v12.21.0
