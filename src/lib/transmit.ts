@@ -308,24 +308,33 @@ export class Transmit extends EventEmitter {
     const writable = await this.manager.createWritableStream(file);
 
     const hash = new HashCalculator(this.options.hashAlgorithm);
-    const meter = new StreamMeter();
+
+    const sizeBeforeTransformers = new StreamMeter();
+    const sizeAfterTransformers = new StreamMeter();
 
     const transformers = this.options.transformers.map((transform) => transform(file));
 
-    await pipeline(readable, meter, ...transformers, hash, writable);
+    await pipeline(
+      readable,
+      sizeBeforeTransformers, // Capture the file size before the file is modified
+      ...transformers,
+      sizeAfterTransformers, // Capture the file size after the file has been modified
+      hash,
+      writable
+    );
 
     if (readable.truncated) {
       throw new FileTooLargeException();
     }
 
-    if (meter.size < this.options.minFileSize) {
+    if (sizeBeforeTransformers.size < this.options.minFileSize) {
       throw new FileTooSmallException();
     }
 
     this.files.push({
       ...file,
       hash: hash.digest,
-      size: meter.size
+      size: sizeAfterTransformers.size
     });
   }
 }
