@@ -10,7 +10,7 @@ on:
     branches: [master]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     strategy:
@@ -43,4 +43,23 @@ jobs:
         run: npm ci
 
       - name: Run tests
-        run: npm test
+        run: npm run coverage
+        
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          flag-name: ${{matrix.os}}-node-${{ matrix.node }}
+          parallel: true
+
+  finish:
+    needs: test
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel-finished: true
