@@ -176,7 +176,8 @@ export class Transmit extends EventEmitter {
 
         // Drain the stream to make sure req emits "end" event
         // https://nodejs.org/api/stream.html#stream_event_end
-        req.on("readable", req.read.bind(req));
+        // https://nodejs.org/api/stream.html#stream_readable_resume
+        req.resume();
 
         busboy.removeAllListeners();
       });
