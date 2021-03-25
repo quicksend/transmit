@@ -292,7 +292,7 @@ describe("Transmit", () => {
       const server = await createTestServer(async (req, res) => {
         const transmit = new Transmit({
           ...TRANSMIT_OPTIONS,
-          filter: () => Promise.resolve(false)
+          filter: () => false
         });
 
         const abortedCallback = jest.fn();

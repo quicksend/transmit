@@ -19,7 +19,7 @@ describe("Express and Sharp integration", () => {
     app.post("/upload", (req, res, next) => {
       const transmit = new Transmit({
         field: "image",
-        filter: async (file) => /^image/.test(file.mimetype),
+        filter: (file) => /^image/.test(file.mimetype),
         manager: new DiskManager({
           directory: TEMP_DIRECTORY
         }),
