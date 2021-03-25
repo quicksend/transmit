@@ -1,5 +1,7 @@
 # Transmit
 
+[![Coverage Status](https://coveralls.io/repos/github/quicksend/transmit/badge.svg?branch=master)](https://coveralls.io/github/quicksend/transmit?branch=master)
+
 An alternative to [Multer](https://github.com/expressjs/multer) for handling multipart/form-data 
 
 ## Why?
