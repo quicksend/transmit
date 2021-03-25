@@ -1,5 +1,6 @@
 # Transmit
 
+[![Build Status](https://github.com/quicksend/transmit/actions/workflows/test.yml/badge.svg)](https://github.com/quicksend/transmit/actions/workflows/test.yml)
 [![Coverage Status](https://coveralls.io/repos/github/quicksend/transmit/badge.svg?branch=master)](https://coveralls.io/github/quicksend/transmit?branch=master)
 
 An alternative to [Multer](https://github.com/expressjs/multer) for handling multipart/form-data 
