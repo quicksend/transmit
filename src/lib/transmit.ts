@@ -5,8 +5,6 @@ import { EventEmitter } from "events";
 import { IncomingMessage } from "http";
 import { promisify } from "util";
 
-import { Counter, HashCalculator, StreamMeter, generateRandomString } from "./transmit.utils";
-
 import { DiskManager } from "./transmit.managers";
 
 import {
@@ -31,6 +29,11 @@ import {
   TransmitManager,
   TransmitOptions
 } from "./transmit.interfaces";
+
+import { Counter } from "./utils/counter.util";
+import { HashCalculator } from "./utils/hash-calculator.util";
+import { StreamMeter } from "./utils/stream-meter.util";
+import { generateRandomString } from "./utils/generate-random-string.util";
 
 const pipeline = promisify(stream.pipeline);
 
