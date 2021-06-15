@@ -1,6 +1,6 @@
 {
   "name": "@quicksend/transmit",
-  "version": "1.0.9",
+  "version": "2.0.0",
   "description": "An alternative to Multer for handling multipart/form-data",
   "files": [
     "dist/**/*"
