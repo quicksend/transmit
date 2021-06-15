@@ -1,9 +1,9 @@
 import fs from "fs";
 
-import { DiskManager } from "../../../src";
+import { DiskManager } from "../../../../src";
 
-import { createMockIncomingFile } from "../../utils/create-mock-incoming-file.util";
-import { createTmpDirectory } from "../../utils/create-tmp-dir.util";
+import { createMockIncomingFile } from "../../../utils/create-mock-incoming-file.util";
+import { createTmpDirectory } from "../../../utils/create-tmp-dir.util";
 
 const TEMP_DIRECTORY = createTmpDirectory();
 
