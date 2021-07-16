@@ -8,9 +8,9 @@ export const createMockIncomingFile = (
   encoding = "7bit"
 ): IncomingFile => {
   return {
-    discriminator: crypto.randomBytes(4).toString("hex"),
     encoding,
     field,
+    id: crypto.randomBytes(16).toString("hex"),
     mimetype,
     name: crypto.randomBytes(4).toString("hex")
   };

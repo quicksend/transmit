@@ -287,10 +287,12 @@ export class Transmit extends EventEmitter {
       return readable.resume();
     }
 
+    const id = await generateRandomString();
+
     const incomingFile: IncomingFile = {
-      discriminator: await generateRandomString(4),
       encoding,
       field,
+      id,
       mimetype,
       name: filename
     };

@@ -53,12 +53,20 @@ describe("Express integration", () => {
         ],
         files: [
           expect.objectContaining({
+            encoding: expect.any(String),
             field: "file",
+            hash: expect.any(String),
+            id: expect.any(String),
+            mimetype: expect.any(String),
             name: "small.dat",
             size: FixtureSizes.SMALL
           }),
           expect.objectContaining({
+            encoding: expect.any(String),
             field: "file",
+            hash: expect.any(String),
+            id: expect.any(String),
+            mimetype: expect.any(String),
             name: "medium.dat",
             size: FixtureSizes.MEDIUM
           })

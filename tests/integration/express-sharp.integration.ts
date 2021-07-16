@@ -44,7 +44,11 @@ describe("Express and Sharp integration", () => {
         fields: [],
         files: [
           expect.objectContaining({
+            encoding: expect.any(String),
             field: "image",
+            hash: expect.any(String),
+            id: expect.any(String),
+            mimetype: expect.any(String),
             name: "image.png",
             size: expect.any(Number)
           })

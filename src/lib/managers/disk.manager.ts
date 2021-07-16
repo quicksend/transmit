@@ -27,13 +27,13 @@ export class DiskManager implements TransmitManager {
       recursive: true
     });
 
-    const destination = path.join(this.options.directory, file.discriminator);
+    const destination = path.join(this.options.directory, file.id);
 
     return fs.createWriteStream(destination);
   }
 
   async deleteFile(file: IncomingFile): Promise<void> {
-    const destination = path.join(this.options.directory, file.discriminator);
+    const destination = path.join(this.options.directory, file.id);
 
     try {
       await fs.promises.unlink(destination);
