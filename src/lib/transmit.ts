@@ -114,9 +114,9 @@ export class Transmit extends EventEmitter {
   /**
    * Delete uploaded files for this request. Useful for cleanup after aborting the upload.
    */
-  async deleteUploadedFiles(): Promise<void> {
+  async removeUploadedFiles(): Promise<void> {
     const tasks = await Promise.allSettled(
-      this.incoming.map((file) => this.manager.deleteFile(file))
+      this.incoming.map((file) => this.manager.removeFile(file))
     );
 
     for (const task of tasks) {
@@ -162,7 +162,7 @@ export class Transmit extends EventEmitter {
 
     return new Promise((resolve, reject) => {
       this.once("aborted", async (error?: Error) => {
-        await this.deleteUploadedFiles();
+        await this.removeUploadedFiles();
 
         if (error) {
           return reject(error);
@@ -311,7 +311,7 @@ export class Transmit extends EventEmitter {
   }
 
   private async writeFile(file: IncomingFile, readable: BusboyReadable) {
-    const writable = await this.manager.createWritableStream(file);
+    const writable = await this.manager.handleFile(file);
 
     const hash = new HashCalculator(this.options.hashAlgorithm);
 

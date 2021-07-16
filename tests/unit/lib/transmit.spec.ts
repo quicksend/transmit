@@ -128,8 +128,8 @@ describe("Transmit", () => {
     });
   });
 
-  describe("#deleteUploadedFiles", () => {
-    it("should delete all uploaded files", async (done) => {
+  describe("#removeUploadedFiles", () => {
+    it("should remove all uploaded files", async (done) => {
       const server = await createTestServer(async (req, res) => {
         const transmit = new Transmit({
           ...TRANSMIT_OPTIONS,
@@ -139,16 +139,16 @@ describe("Transmit", () => {
           maxFiles: 3
         });
 
-        const spyOnDeleteFile = jest.spyOn(transmit.manager, "deleteFile");
+        const spyOnRemoveFile = jest.spyOn(transmit.manager, "removeFile");
 
         await transmit.parseAsync(req);
 
-        await transmit.deleteUploadedFiles();
+        await transmit.removeUploadedFiles();
 
-        expect(spyOnDeleteFile).toBeCalledTimes(3); // 3 times because we uploaded 3 files
-        expect(spyOnDeleteFile).toBeCalledWith(expect.objectContaining({ name: "empty.dat" }));
-        expect(spyOnDeleteFile).toBeCalledWith(expect.objectContaining({ name: "small.dat" }));
-        expect(spyOnDeleteFile).toBeCalledWith(expect.objectContaining({ name: "medium.dat" }));
+        expect(spyOnRemoveFile).toBeCalledTimes(3); // 3 times because we uploaded 3 files
+        expect(spyOnRemoveFile).toBeCalledWith(expect.objectContaining({ name: "empty.dat" }));
+        expect(spyOnRemoveFile).toBeCalledWith(expect.objectContaining({ name: "small.dat" }));
+        expect(spyOnRemoveFile).toBeCalledWith(expect.objectContaining({ name: "medium.dat" }));
 
         res.end();
       });
@@ -696,7 +696,7 @@ describe("Transmit", () => {
         .end(() => server.close(() => done()));
     });
 
-    it("should delete all uploaded files when it emits 'aborted'", async (done) => {
+    it("should remove all uploaded files when it emits 'aborted'", async (done) => {
       const server = await createTestServer(async (req, res) => {
         const transmit = new Transmit({
           ...TRANSMIT_OPTIONS,
@@ -706,13 +706,13 @@ describe("Transmit", () => {
           minFiles: 3 // cause an error so that transmit will abort
         });
 
-        const spyOnDeleteFile = jest.spyOn(transmit.manager, "deleteFile");
+        const spyOnRemoveFile = jest.spyOn(transmit.manager, "removeFile");
 
         await transmit.parseAsync(req).catch(() => undefined); // we expect this to throw, so ignore the error since we aren't testing this
 
-        expect(spyOnDeleteFile).toBeCalledTimes(2); // 2 times because we uploaded 2 files
-        expect(spyOnDeleteFile).toBeCalledWith(expect.objectContaining({ name: "empty.dat" }));
-        expect(spyOnDeleteFile).toBeCalledWith(expect.objectContaining({ name: "small.dat" }));
+        expect(spyOnRemoveFile).toBeCalledTimes(2); // 2 times because we uploaded 2 files
+        expect(spyOnRemoveFile).toBeCalledWith(expect.objectContaining({ name: "empty.dat" }));
+        expect(spyOnRemoveFile).toBeCalledWith(expect.objectContaining({ name: "small.dat" }));
 
         res.end();
       });

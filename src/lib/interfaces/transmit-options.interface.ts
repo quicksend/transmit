@@ -9,7 +9,7 @@ export interface TransmitOptions {
   field?: string;
 
   /**
-   * Function that returns a boolean to determine which files should be uploaded.
+   * Function that returns a boolean to determine which files should be persisted.
    */
   filter?: FilterFunction;
 

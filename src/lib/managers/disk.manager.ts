@@ -22,7 +22,7 @@ export class DiskManager implements TransmitManager {
     };
   }
 
-  async createWritableStream(file: IncomingFile): Promise<NodeJS.WritableStream> {
+  async handleFile(file: IncomingFile): Promise<NodeJS.WritableStream> {
     await fs.promises.mkdir(this.options.directory, {
       recursive: true
     });
@@ -32,7 +32,7 @@ export class DiskManager implements TransmitManager {
     return fs.createWriteStream(destination);
   }
 
-  async deleteFile(file: IncomingFile): Promise<void> {
+  async removeFile(file: IncomingFile): Promise<void> {
     const destination = path.join(this.options.directory, file.id);
 
     try {

@@ -22,9 +22,9 @@ describe("DiskManager", () => {
     expect(DiskManager).toBeDefined();
   });
 
-  describe("#createWritableStream", () => {
+  describe("#handleFile", () => {
     it("should return a write stream", async () => {
-      const writeStream = await manager.createWritableStream(createMockIncomingFile());
+      const writeStream = await manager.handleFile(createMockIncomingFile());
 
       expect(writeStream).toBeInstanceOf(fs.WriteStream);
 
@@ -35,9 +35,9 @@ describe("DiskManager", () => {
     });
   });
 
-  describe("#deleteFile", () => {
-    it("should delete the file", async () => {
-      await manager.deleteFile(createMockIncomingFile());
+  describe("#removeFile", () => {
+    it("should remove the file", async () => {
+      await manager.removeFile(createMockIncomingFile());
     });
   });
 });

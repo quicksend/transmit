@@ -160,14 +160,9 @@ You can create your own transmit managers. All managers must implement the [Tran
 ```ts
 import { IncomingFile, TransmitManager } from "@quicksend/transmit";
 
-export class MyTransmitManager implements TransmitManager {
-  createWritableStream(file: IncomingFile) {
-    // must return a writable stream
-  }
-
-  deleteFile(file: IncomingFile) {
-    // must return void
-  }
+export class CustomTransmitManager implements TransmitManager {
+  handleFile(file: IncomingFile): Promise<NodeJS.WritableStream> | NodeJS.WritableStream {}
+  removeFile(file: IncomingFile): Promise<void> | void {}
 }
 ```
 
