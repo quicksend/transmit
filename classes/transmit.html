@@ -106,9 +106,9 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="transmit.html#abort" class="tsd-kind-icon">abort</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="transmit.html#deleteuploadedfiles" class="tsd-kind-icon">delete<wbr>Uploaded<wbr>Files</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="transmit.html#parse" class="tsd-kind-icon">parse</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="transmit.html#parseasync" class="tsd-kind-icon">parse<wbr>Async</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="transmit.html#removeuploadedfiles" class="tsd-kind-icon">remove<wbr>Uploaded<wbr>Files</a></li>
 							</ul>
 						</section>
 					</div>
@@ -261,32 +261,6 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="deleteuploadedfiles" class="tsd-anchor"></a>
-					<h3>delete<wbr>Uploaded<wbr>Files</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>Uploaded<wbr>Files<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in
-										<a href="https://github.com/quicksend/transmit/blob/master/lib/transmit.ts#L117">
-											lib/transmit.ts:117
-										</a>
-									</li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography tsd-comment-shorttext">
-								<div class="lead">
-									<p>Delete uploaded files for this request. Useful for cleanup after aborting the upload.</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="parse" class="tsd-anchor"></a>
 					<h3>parse</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -351,6 +325,32 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="removeuploadedfiles" class="tsd-anchor"></a>
+					<h3>remove<wbr>Uploaded<wbr>Files</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Uploaded<wbr>Files<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in
+										<a href="https://github.com/quicksend/transmit/blob/master/lib/transmit.ts#L117">
+											lib/transmit.ts:117
+										</a>
+									</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography tsd-comment-shorttext">
+								<div class="lead">
+									<p>Delete uploaded files for this request. Useful for cleanup after aborting the upload.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
 			</section>
 			<!--{&quot;options&quot;:&quot;/home/runner/work/transmit/transmit&quot;,&quot;tsconfig&quot;:&quot;/home/runner/work/transmit/transmit&quot;,&quot;entryPoints&quot;:[&quot;./src/index.ts&quot;],&quot;exclude&quot;:[],&quot;externalPattern&quot;:[&quot;**/node_modules/**&quot;],&quot;excludeExternals&quot;:true,&quot;excludeNotDocumented&quot;:false,&quot;excludeInternal&quot;:true,&quot;excludePrivate&quot;:true,&quot;excludeProtected&quot;:true,&quot;disableSources&quot;:false,&quot;includes&quot;:&quot;&quot;,&quot;media&quot;:&quot;&quot;,&quot;watch&quot;:false,&quot;preserveWatchOutput&quot;:false,&quot;emit&quot;:false,&quot;out&quot;:&quot;docs&quot;,&quot;json&quot;:&quot;&quot;,&quot;theme&quot;:&quot;./node_modules/typedoc-neo-theme/bin/default&quot;,&quot;highlightTheme&quot;:&quot;light-plus&quot;,&quot;name&quot;:&quot;&quot;,&quot;includeVersion&quot;:false,&quot;excludeTags&quot;:[],&quot;readme&quot;:&quot;&quot;,&quot;defaultCategory&quot;:&quot;Other&quot;,&quot;categoryOrder&quot;:[],&quot;categorizeByGroup&quot;:true,&quot;gitRevision&quot;:&quot;&quot;,&quot;gitRemote&quot;:&quot;origin&quot;,&quot;gaID&quot;:&quot;&quot;,&quot;gaSite&quot;:&quot;auto&quot;,&quot;hideGenerator&quot;:false,&quot;toc&quot;:[],&quot;disableOutputCheck&quot;:false,&quot;help&quot;:false,&quot;version&quot;:false,&quot;showConfig&quot;:false,&quot;plugin&quot;:[&quot;typedoc-neo-theme&quot;],&quot;logger&quot;:&quot;console&quot;,&quot;logLevel&quot;:1,&quot;listInvalidSymbolLinks&quot;:false,&quot;source&quot;:[{&quot;path&quot;:&quot;https://github.com/quicksend/transmit/blob/master/&quot;,&quot;line&quot;:&quot;L&quot;}]}-->
 		</div>
@@ -411,13 +411,13 @@
 								<a href="transmit.html#abort" class="tsd-kind-icon">abort</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="transmit.html#deleteuploadedfiles" class="tsd-kind-icon">delete<wbr>Uploaded<wbr>Files</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="transmit.html#parse" class="tsd-kind-icon">parse</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="transmit.html#parseasync" class="tsd-kind-icon">parse<wbr>Async</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="transmit.html#removeuploadedfiles" class="tsd-kind-icon">remove<wbr>Uploaded<wbr>Files</a>
 							</li>
 						</ul>
 					</li>
