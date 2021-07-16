@@ -91,10 +91,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="file.html#discriminator" class="tsd-kind-icon">discriminator</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="file.html#encoding" class="tsd-kind-icon">encoding</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="file.html#field" class="tsd-kind-icon">field</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="file.html#hash" class="tsd-kind-icon">hash</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="file.html#id" class="tsd-kind-icon">id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="file.html#mimetype" class="tsd-kind-icon">mimetype</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="file.html#name" class="tsd-kind-icon">name</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="file.html#size" class="tsd-kind-icon">size</a></li>
@@ -106,21 +106,6 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="discriminator" class="tsd-anchor"></a>
-					<h3>discriminator</h3>
-					<div class="tsd-signature tsd-kind-icon">discriminator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="incomingfile.html">IncomingFile</a>.<a href="incomingfile.html#discriminator">discriminator</a></p>
-						<ul>
-							<li>Defined in
-								<a href="https://github.com/quicksend/transmit/blob/master/lib/interfaces/incoming-file.interface.ts#L2">
-									lib/interfaces/incoming-file.interface.ts:2
-								</a>
-							</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="encoding" class="tsd-anchor"></a>
 					<h3>encoding</h3>
 					<div class="tsd-signature tsd-kind-icon">encoding<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
@@ -128,8 +113,8 @@
 						<p>Inherited from <a href="incomingfile.html">IncomingFile</a>.<a href="incomingfile.html#encoding">encoding</a></p>
 						<ul>
 							<li>Defined in
-								<a href="https://github.com/quicksend/transmit/blob/master/lib/interfaces/incoming-file.interface.ts#L3">
-									lib/interfaces/incoming-file.interface.ts:3
+								<a href="https://github.com/quicksend/transmit/blob/master/lib/interfaces/incoming-file.interface.ts#L2">
+									lib/interfaces/incoming-file.interface.ts:2
 								</a>
 							</li>
 						</ul>
@@ -143,8 +128,8 @@
 						<p>Inherited from <a href="incomingfile.html">IncomingFile</a>.<a href="incomingfile.html#field">field</a></p>
 						<ul>
 							<li>Defined in
-								<a href="https://github.com/quicksend/transmit/blob/master/lib/interfaces/incoming-file.interface.ts#L4">
-									lib/interfaces/incoming-file.interface.ts:4
+								<a href="https://github.com/quicksend/transmit/blob/master/lib/interfaces/incoming-file.interface.ts#L3">
+									lib/interfaces/incoming-file.interface.ts:3
 								</a>
 							</li>
 						</ul>
@@ -159,6 +144,21 @@
 							<li>Defined in
 								<a href="https://github.com/quicksend/transmit/blob/master/lib/interfaces/file.interface.ts#L4">
 									lib/interfaces/file.interface.ts:4
+								</a>
+							</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="id" class="tsd-anchor"></a>
+					<h3>id</h3>
+					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="incomingfile.html">IncomingFile</a>.<a href="incomingfile.html#id">id</a></p>
+						<ul>
+							<li>Defined in
+								<a href="https://github.com/quicksend/transmit/blob/master/lib/interfaces/incoming-file.interface.ts#L4">
+									lib/interfaces/incoming-file.interface.ts:4
 								</a>
 							</li>
 						</ul>
@@ -268,9 +268,6 @@
 						<a href="file.html" class="tsd-kind-icon">File</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="file.html#discriminator" class="tsd-kind-icon">discriminator</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 								<a href="file.html#encoding" class="tsd-kind-icon">encoding</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
@@ -278,6 +275,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="file.html#hash" class="tsd-kind-icon">hash</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="file.html#id" class="tsd-kind-icon">id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 								<a href="file.html#mimetype" class="tsd-kind-icon">mimetype</a>
