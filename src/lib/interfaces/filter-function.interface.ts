@@ -1,5 +1,7 @@
 import { IncomingFile } from "./incoming-file.interface";
 
+import { Promisable } from "../types/promisable.type";
+
 export interface FilterFunction {
-  (file: IncomingFile): Promise<boolean> | boolean;
+  (file: IncomingFile): Promisable<boolean>;
 }
