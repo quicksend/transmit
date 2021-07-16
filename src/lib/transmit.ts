@@ -239,9 +239,9 @@ export class Transmit extends EventEmitter {
 
   private handleIncomingField(
     fieldName: string,
-    value: string,
+    fieldValue: string,
     fieldNameTruncated: boolean,
-    valueTruncated: boolean,
+    fieldValueTruncated: boolean,
     encoding: string,
     mimetype: string
   ) {
@@ -255,7 +255,7 @@ export class Transmit extends EventEmitter {
       return this.abort(new FieldNameTooLargeException());
     }
 
-    if (valueTruncated && !this.options.truncateFieldValues) {
+    if (fieldValueTruncated && !this.options.truncateFieldValues) {
       return this.abort(new FieldValueTooLargeException());
     }
 
@@ -263,7 +263,7 @@ export class Transmit extends EventEmitter {
       encoding,
       mimetype,
       name: fieldName,
-      value: String(value)
+      value: String(fieldValue)
     });
   }
 
