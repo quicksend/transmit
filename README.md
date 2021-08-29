@@ -18,6 +18,7 @@ In addition, Transmit offers a modern API, making use of promises. It also allow
 
 ```bash
 $ npm install @quicksend/transmit
+$ npm install -D @types/busboy
 ```
 
 ## Usage
